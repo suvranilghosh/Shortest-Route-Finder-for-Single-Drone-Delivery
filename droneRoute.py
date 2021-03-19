@@ -1,5 +1,8 @@
 # shortest drone delivery finder
 # takes coordinates of a set of delivery locations as input
+# starts from location 0 by default [starting point]
+# calculates distance of shortest hamiltonian cycle
+# yet to implement storage of path
 
 import time
 import math
@@ -9,16 +12,13 @@ from itertools import permutations
 
 # V=4
 
-def coordToGraph(file, V):
-    lines = file.readlines()
+def coordToGraph(lines):
     # matrix of coords
     coords = np.zeros((len(lines), 2))
     
     for i in range(len(lines)):
         # p,q= lines[i].split()
         coords[i][0], coords[i][1] = lines[i].split()  
-    # print (len(coords))
-    V=len(coords)
     
     # adjacency matrix for the graph
     # calculate distance between each combination of the coordinates
@@ -33,11 +33,10 @@ def coordToGraph(file, V):
                 graph[i][j] = (distance)
                 graph[j][i] = (distance)
     # print(graph)
-    return graph, V
+    return graph
 
 # implementation of traveling Salesman Problem 
 def shortestPath(graph, s, V): 
- 
     # store all vertex apart from source vertex 
     vertex = [] 
     print(V)
@@ -72,12 +71,12 @@ def main():
     if len(argv)<2:
         print ("***ERROR : Please input file name along in cmd line***")
         exit()
-    f = open("./data/"+argv[1], 'r')
-    V = 0
+    file = open("./data/"+argv[1], 'r')
+    lines = file.readlines()
+    V = len(lines)
+
     start_time = time.time()
-    graph, V = coordToGraph(f, V)
-        
-    # matrix representation of graph 
+    graph = coordToGraph(lines)   
     # graph = [[0, 10, 15, 20], [10, 0, 35, 25], [15, 35, 0, 30], [20, 25, 30, 0]] 
     s = 0
     print(shortestPath(graph, s, V))
