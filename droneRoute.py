@@ -6,17 +6,20 @@ import math
 import numpy as np
 from sys import maxsize, argv
 from itertools import permutations
-V = 4
 
-def coordToGraph(file):
+# V=4
+
+def coordToGraph(file, V):
     lines = file.readlines()
     # matrix of coords
     coords = np.zeros((len(lines), 2))
+    
     for i in range(len(lines)):
         # p,q= lines[i].split()
         coords[i][0], coords[i][1] = lines[i].split()  
     # print (len(coords))
-
+    V=len(coords)
+    
     # adjacency matrix for the graph
     # calculate distance between each combination of the coordinates
     # put the distances in appropriate position in the adjacency matrix
@@ -30,13 +33,14 @@ def coordToGraph(file):
                 graph[i][j] = (distance)
                 graph[j][i] = (distance)
     # print(graph)
-    return graph
+    return graph, V
 
 # implementation of traveling Salesman Problem 
-def shortestPath(graph, s): 
+def shortestPath(graph, s, V): 
  
     # store all vertex apart from source vertex 
     vertex = [] 
+    print(V)
     for i in range(V): 
         if i != s: 
             vertex.append(i)
@@ -69,15 +73,16 @@ def main():
         print ("***ERROR : Please input file name along in cmd line***")
         exit()
     f = open("./data/"+argv[1], 'r')
+    V = 0
     start_time = time.time()
-    graph = coordToGraph(f)
+    graph, V = coordToGraph(f, V)
         
     # matrix representation of graph 
     # graph = [[0, 10, 15, 20], [10, 0, 35, 25], [15, 35, 0, 30], [20, 25, 30, 0]] 
     s = 0
-    print(shortestPath(graph, s))
+    print(shortestPath(graph, s, V))
     end_time = time.time()
-    total_time=end_time - start_time
+    total_time = end_time - start_time
     print ("Execution time = ", total_time)
 
 # Driver Code 
