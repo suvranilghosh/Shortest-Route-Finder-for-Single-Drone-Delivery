@@ -3,5 +3,7 @@
 - Input to this implementation is supposed to be a list of coordinates representing delivery locations and origin
 - Output (preliminary): Prints the length of the shortest Hamiltonian cycle
 - Execution instruction:
-- ```<cd to property directory>``` 
-- ```python droneRoute.py nbcoords.txt```
+- `<cd to property directory>`
+- `python droneRoute.py <filename>`
+- Example:
+- `python droneRoute.py deliveryLocs13.txt`
