@@ -109,9 +109,10 @@ def main():
         count += 1
 
     # print shortest route distance and execution time
-    print("Shortest Route Distance:", shortest_dist, 'Km')
-    print ("Execution time =", total_time, "seconds")
-
+    print("Shortest Route Distance: %.3f" % shortest_dist, 'Km')
+    print ("Execution time = %.3f" % total_time, "seconds")
+    file = open("./output/exectime" + str(V) + '.txt', 'w')
+    file.write(str('%.3f'%total_time)+' seconds\n')
 
 # Driver Code 
 if __name__ == "__main__": 
