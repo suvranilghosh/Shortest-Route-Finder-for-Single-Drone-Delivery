@@ -10,8 +10,16 @@ import numpy as np
 from sys import maxsize, argv
 from itertools import permutations
 
+# distance calculator between two coordinates using haversine formula
 def haversine(lat1, long1, lat2, long2):
     R = 6378.1 # radius of earth 
+    phi1 = lat1 * math.pi / 180
+    phi2 = lat2 * math.pi / 180
+    delphi = (lat2-lat1) * math.pi / 180
+    dellambda = (long2-long1) * math.pi / 180
+    a = math.sin(delphi/2) * math.sin(delphi/2) + math.cos(phi1) * math.cos(phi2) * math.sin(dellambda/2) * math.sin(dellambda/2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    return R * c # in kilometers
 
 
 # convert input (list of lines containing coordinates to adjacency matrix)
@@ -34,7 +42,8 @@ def coordToGraph(lines):
             if i == j:
                 graph[i][j] = 0
             elif j > i:
-                distance = math.sqrt((coords[i][0]-coords[j][0])**2+(coords[i][1]-coords[j][1])**2)
+                # distance = math.sqrt((coords[i][0]-coords[j][0])**2+(coords[i][1]-coords[j][1])**2)
+                distance = haversine(coords[i][0], coords[i][1], coords[j][0], coords[j][1])
                 graph[i][j] = (distance)
                 graph[j][i] = (distance)
     # print(graph)
@@ -95,14 +104,12 @@ def main():
     print("Shortest Route:", s, end = ' -> ')
     count = 0
     for location in shortest_path:
-        if count == len(shortest_path)-1:
-            print(location,'->',s)
-        else:
-            print(location,end = ' -> ')
+        if count == len(shortest_path)-1: print(location,'->',s)
+        else: print(location,end = ' -> ')
         count += 1
 
     # print shortest route distance and execution time
-    print("Shortest Route (Distance:", shortest_dist)
+    print("Shortest Route Distance:", shortest_dist, 'Km')
     print ("Execution time =", total_time, "seconds")
 
 
@@ -112,4 +119,4 @@ if __name__ == "__main__":
 
 
 # New brunswick, NJ  : lat= 40.486216 long = -74.451819
-# range from +- 0.10 for both lat and long 
+# range from +- 0.15 for both lat and long 
