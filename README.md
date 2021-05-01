@@ -4,4 +4,4 @@
 - Output (preliminary): Prints the length of the shortest Hamiltonian cycle
 - Execution instruction:
 - ```<cd to property directory>``` 
-- ```python droneRoute.py njcoords.txt```
+- ```python droneRoute.py nbcoords.txt```
