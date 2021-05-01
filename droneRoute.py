@@ -12,6 +12,7 @@ from itertools import permutations
 
 # V=4
 
+# convert input
 def coordToGraph(lines):
     # matrix of coords
     coords = np.zeros((len(lines), 2))
@@ -37,18 +38,16 @@ def coordToGraph(lines):
 
 # implementation of traveling Salesman Problem 
 def shortestPath(graph, s, V): 
-    # store all vertex apart from source vertex 
-    vertex = [] 
-    print(V)
-    for i in range(V): 
-        if i != s: 
-            vertex.append(i)
+    # store all vertex apart from source vertex
+    vertex = [i for i in range(V) if i != s]
  
-    # store minimum weight Hamiltonian Cycle 
-    min_path = maxsize
-    next_permutation=permutations(vertex)
+    # initialize minimum path length to infinity 
+    # (later used for returning the weight of the shortest Hamiltonian Cycle)
+    min_path_distance = float('inf')
+    # returns permutations of entire list of vertices [0 to V-1] as immutatble tuples
+    next_permutation = permutations(vertex)
     
-    # print(min_path)
+    # print(min_path_distance)
     # print(permutations(range(V)))
     for i in next_permutation:
         # print(i)
@@ -63,9 +62,11 @@ def shortestPath(graph, s, V):
         current_pathweight += graph[k][s] 
  
         # update minimum 
-        min_path = min(min_path, current_pathweight) 
-        # min_path = current_pathweight
-    return min_path 
+        if current_pathweight <= min_path_distance:
+            min_path_distance = current_pathweight
+            min_path = i
+        
+    return min_path_distance, min_path
  
 def main():
     if len(argv)<2:
@@ -75,15 +76,36 @@ def main():
     lines = file.readlines()
     V = len(lines)
 
+    print("Number of delivery locations: ", V)
+
     start_time = time.time()
-    graph = coordToGraph(lines)   
-    # graph = [[0, 10, 15, 20], [10, 0, 35, 25], [15, 35, 0, 30], [20, 25, 30, 0]] 
+    graph = coordToGraph(lines)  
+    
+    # drone starts from 0
     s = 0
-    print(shortestPath(graph, s, V))
+    shortest_dist, shortest_path = shortestPath(graph, s, V)
     end_time = time.time()
     total_time = end_time - start_time
+    
+    # print shortest route
+    print("Shortest Route: ", s, end = '->')
+    count = 0
+    for location in shortest_path:
+        if count == len(shortest_path)-1:
+            print(location)
+        else:
+            print(location,end = '->')
+        count += 1
+
+    # print shortest route distance and execution time
+    print("Shortest Route Distance: ", shortest_dist)
     print ("Execution time = ", total_time)
+
 
 # Driver Code 
 if __name__ == "__main__": 
     main()
+
+
+# New brunswick, NJ  : lat= 40.486216 long = -74.451819
+# range from +- 0.10 for both lat and long 
