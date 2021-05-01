@@ -10,13 +10,16 @@ import numpy as np
 from sys import maxsize, argv
 from itertools import permutations
 
-# V=4
+def haversine(lat1, long1, lat2, long2):
+    R = 6378.1 # radius of earth 
 
-# convert input
+
+# convert input (list of lines containing coordinates to adjacency matrix)
 def coordToGraph(lines):
     # matrix of coords
     coords = np.zeros((len(lines), 2))
     
+    # store coordinates in a list
     for i in range(len(lines)):
         # p,q= lines[i].split()
         coords[i][0], coords[i][1] = lines[i].split()  
@@ -24,6 +27,7 @@ def coordToGraph(lines):
     # adjacency matrix for the graph
     # calculate distance between each combination of the coordinates
     # put the distances in appropriate position in the adjacency matrix
+    # distance calculated using haversine formula
     graph = np.zeros((len(coords), len(coords)) )
     for i in range(len(coords)):
         for j in range(len(coords)):
@@ -88,18 +92,18 @@ def main():
     total_time = end_time - start_time
     
     # print shortest route
-    print("Shortest Route: ", s, end = '->')
+    print("Shortest Route:", s, end = ' -> ')
     count = 0
     for location in shortest_path:
         if count == len(shortest_path)-1:
-            print(location)
+            print(location,'->',s)
         else:
-            print(location,end = '->')
+            print(location,end = ' -> ')
         count += 1
 
     # print shortest route distance and execution time
-    print("Shortest Route Distance: ", shortest_dist)
-    print ("Execution time = ", total_time)
+    print("Shortest Route (Distance:", shortest_dist)
+    print ("Execution time =", total_time, "seconds")
 
 
 # Driver Code 
