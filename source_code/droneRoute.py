@@ -8,7 +8,8 @@ Execution instructions:
 > <cd to property directory>
 > python droneRoute.py <filename>
 Example:
-> python droneRoute.py deliveryLocs13.txt`
+> cd ./source_code/
+> python droneRoute.py deliveryLocs13.txt
 
 All input data files are stored under ./data/ and
 all output data files are stored under ./output/
@@ -93,7 +94,7 @@ def main():
     if len(argv)<2:
         print ("***ERROR : Please input file name along in cmd line***")
         exit()
-    file = open("./data/"+argv[1], 'r')
+    file = open("../data/"+argv[1], 'r')
     lines = file.readlines()
     V = len(lines)
 
@@ -124,7 +125,7 @@ def main():
     print ("Execution time = %.3f" % total_time, "seconds")
 
     # output to file under ./output/ directory
-    file = open("./output/exectime" + str(V) + '.txt', 'w')
+    file = open("../output/exectime" + str(V) + '.txt', 'w')
     file.write(str('%.3f'%total_time)+' seconds\n')
 
 
