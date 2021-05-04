@@ -1,6 +1,6 @@
 # Shortest Drone Delivery Route Finder
 - Group 6
-- Members:
+- Contributors:
 - Aditi Satish (fa402), fa402@scarletmail.rutgers.edu
 - Suvranil Ghosh (sg1239), suvranil.ghosh@rutgers.edu
 
