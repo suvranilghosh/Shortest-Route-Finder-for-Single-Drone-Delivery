@@ -9,3 +9,5 @@
 - `python droneRoute.py <filename>`
 - Example:
 - `python droneRoute.py deliveryLocs13.txt`
+
+- Contributors: Suvranil Ghosh, Aditi Satish
